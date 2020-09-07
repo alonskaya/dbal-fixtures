@@ -7,6 +7,7 @@
 namespace ComPHPPuebla\Fixtures\Database;
 
 use Doctrine\DBAL\Connection as DbConnection;
+use Doctrine\DBAL\DBALException;
 
 class DBALConnection implements Connection
 {
@@ -37,7 +38,12 @@ class DBALConnection implements Connection
     public function primaryKeyOf(string $table): string
     {
         $schema = $this->connection->getSchemaManager();
-        return $schema->listTableDetails($table)->getPrimaryKeyColumns()[0];
+        
+        try {
+            return $schema->listTableDetails($table)->getPrimaryKeyColumns()[0];
+        } catch (DBALException $exception) {
+            return '';
+        }
     }
 
     /**
