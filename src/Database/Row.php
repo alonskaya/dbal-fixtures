@@ -41,7 +41,7 @@ class Row
      */
     public function id()
     {
-        return $this->values[$this->primaryKeyColumn];
+        return $this->primaryKeyColumn ? $this->values[$this->primaryKeyColumn] : '';
     }
 
     public function values(): array
